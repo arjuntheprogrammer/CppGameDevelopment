@@ -46,3 +46,9 @@ void Sprite::Render() {
 }
 
 
+void Sprite::SetPos(float x, float y) {
+	xPos = x;
+	yPos = y;
+}
+
+

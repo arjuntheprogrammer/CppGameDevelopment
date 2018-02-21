@@ -1,6 +1,7 @@
 #include "Engine.h"
-int Engine::SCREEN_HEIGHT = 1024;
-int Engine::SCREEN_WIDTH = 768;
+#include "IO/Mouse.h"
+int Engine::SCREEN_WIDTH = 1024;
+int Engine::SCREEN_HEIGHT = 768;
 GLFWwindow* Engine::window = NULL;
 
 Engine::Engine() {
@@ -28,6 +29,11 @@ bool Engine::Initialize(const char * windowTitle) {
 	int width, height;
 	glfwGetFramebufferSize(window, &width, &height);
 	glfwSwapInterval(1);
+
+
+	glfwSetCursorPosCallback(window, Mouse::mousePosCallback);
+	glfwSetMouseButtonCallback(window, Mouse::mouseButtonCallback);
+
 	
 	const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
 	int xPos = (mode->width - SCREEN_WIDTH) / 2;

@@ -11,7 +11,7 @@ Texture::Texture(int _id) {
 	}
 }
 Texture::Texture(string path) {
-	id = SOIL_load_OGL_texture(path.c_str(), SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MULTIPLY_ALPHA);
+	id = SOIL_load_OGL_texture(path.c_str(), SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MULTIPLY_ALPHA | SOIL_FLAG_INVERT_Y);
 	if (!GetTextureParams()) {
 		cout << "Error loading image with path : " << path <<endl;
 
@@ -39,7 +39,7 @@ bool Texture::GetTextureParams() {
 		int mipLevel = 0;
 		glBindTexture(GL_TEXTURE_2D, id);
 		glGetTexLevelParameteriv(GL_TEXTURE_2D, mipLevel, GL_TEXTURE_WIDTH, &width);
-		glGetTexLevelParameteriv(GL_TEXTURE_2D, mipLevel, GL_TEXTURE_WIDTH, &height);
+		glGetTexLevelParameteriv(GL_TEXTURE_2D, mipLevel, GL_TEXTURE_HEIGHT, &height);
 		return true;
 	}
 	return false;
