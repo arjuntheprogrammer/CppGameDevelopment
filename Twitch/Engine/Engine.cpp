@@ -4,6 +4,8 @@
 int Engine::SCREEN_WIDTH = 1024;
 int Engine::SCREEN_HEIGHT = 768;
 GLFWwindow* Engine::window = NULL;
+double Engine::dt = 0;
+
 
 Engine::Engine() {
 
@@ -61,11 +63,17 @@ bool Engine::Initialize(const char * windowTitle) {
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+	lastTime = glfwGetTime();
+
 	return true;
 
 }
 
 void Engine::Update() {
+	
+	double now = glfwGetTime();
+	dt = (now - lastTime);
+	lastTime = now;
 	glfwPollEvents();
 }
 
@@ -78,4 +86,8 @@ void Engine::BeginRender() {
 
 void Engine::EndRender(){
 	glfwSwapBuffers(window);
+}
+
+double Engine::getDt() {
+	return dt;
 }

@@ -13,6 +13,7 @@ class Engine {
 public:
 	static int SCREEN_WIDTH;
 	static int SCREEN_HEIGHT;
+	static double getDt();
 
 	Engine();
 	~Engine();
@@ -27,7 +28,8 @@ public:
 
 private:
 	static GLFWwindow* window;
-
+	static double dt; //differce between now and last time.
+	double lastTime;
 };
 
 #endif
