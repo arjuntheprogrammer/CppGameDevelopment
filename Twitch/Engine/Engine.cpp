@@ -1,5 +1,6 @@
 #include "Engine.h"
 #include "IO/Mouse.h"
+#include "IO/Keyboard.h"
 int Engine::SCREEN_WIDTH = 1024;
 int Engine::SCREEN_HEIGHT = 768;
 GLFWwindow* Engine::window = NULL;
@@ -33,6 +34,7 @@ bool Engine::Initialize(const char * windowTitle) {
 
 	glfwSetCursorPosCallback(window, Mouse::mousePosCallback);
 	glfwSetMouseButtonCallback(window, Mouse::mouseButtonCallback);
+	glfwSetKeyCallback(window, Keyboard::keyCallBack);
 
 	
 	const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
@@ -65,7 +67,6 @@ bool Engine::Initialize(const char * windowTitle) {
 
 void Engine::Update() {
 	glfwPollEvents();
-
 }
 
 void Engine::BeginRender() {
