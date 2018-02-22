@@ -8,6 +8,8 @@ Sprite::Sprite() {
 	rot = 0;
 	speed = 100;
 	texture = Texture();
+	scale = Vector3(1);
+	size = Vector3(0);
 }
 
 Sprite::Sprite(string imagePath) {
@@ -17,6 +19,8 @@ Sprite::Sprite(string imagePath) {
 	speed = 100;
 	texture = Texture(imagePath);
 
+	scale = Vector3(1);
+	size = Vector3((float)texture.getWidth(), (float)texture.getHeight(), 1);
 }
 
 Sprite::Sprite(string imagePath, Vector3 v) {
@@ -25,6 +29,9 @@ Sprite::Sprite(string imagePath, Vector3 v) {
 	pos = v;
 	rot = 0;
 	speed = 100;
+
+	scale = Vector3(1);
+	size = Vector3((float)texture.getWidth(), (float)texture.getHeight(), 1);
 
 }
 void Sprite::Update() {
@@ -49,11 +56,14 @@ void Sprite::Render() {
 	glColor4f(1, 1, 1, 1);
 	  
 	glBegin(GL_QUADS);
-	glTexCoord2f(0, 0);	glVertex2i(0, 0);
-	glTexCoord2f(1, 0);	glVertex2i(texture.getWidth(), 0);
-	glTexCoord2f(1, 1);	glVertex2i(texture.getWidth(), texture.getHeight());
-	glTexCoord2f(0, 1);	glVertex2i(0 , texture.getHeight());
+	{
+		glTexCoord2f(0, 0);	glVertex2i(0, 0);
+		glTexCoord2f(1, 0);	glVertex2i(texture.getWidth(), 0);
+		glTexCoord2f(1, 1);	glVertex2i(texture.getWidth(), texture.getHeight());
+		glTexCoord2f(0, 1);	glVertex2i(0, texture.getHeight());
 
+	}
+	
 	glEnd();
 	glDisable(GL_TEXTURE_2D);
 
@@ -116,4 +126,16 @@ void Sprite::setScale(Vector3 v) {
 
 
 
+Vector3* Sprite::getPos() {
+	return &pos;
+}
+float* Sprite::getRot() {
+	return &rot;
+}
+Vector3* Sprite::getScale() {
+	return &scale;
+}
+Vector3* Sprite::getSize() {
+	return &scale;
+}
 
