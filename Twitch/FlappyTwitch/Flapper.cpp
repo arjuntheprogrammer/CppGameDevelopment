@@ -6,7 +6,7 @@ Flapper::Flapper() {
 
 Flapper::Flapper(Sprite _sprite) {
 	sprite = _sprite;
-	rb.initialize(0.8f, 0, sprite.getPos(), sprite.getRot(), sprite.getScale(), sprite.getSize());
+	rb.initialize(0.8f, -10, sprite.getPos(), sprite.getRot(), sprite.getScale(), sprite.getSize());
 
 }
 

@@ -21,6 +21,7 @@ void Rigidbody::update() {
 	vel.y -= gravity;
 
 	*pos = *pos + (vel + Engine::getDt());
+	vel = Vector3(0);
 
 }
 
