@@ -12,6 +12,8 @@ public:
 	void update();
 	void render();
 
+	void flap();
+
 	Sprite& getSprite();
 	Rigidbody& getRB();
 
@@ -19,6 +21,9 @@ public:
 private:
 	Sprite sprite;
 	Rigidbody rb;
+	float flapForce;
+	float maxRot;
+	float minRot;
 };
 
 

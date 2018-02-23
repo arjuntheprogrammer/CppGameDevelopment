@@ -1,10 +1,14 @@
 #include "Flapper.h"
+#include "../Engine/Engine.h"
 
 Flapper::Flapper() {
+	flapForce = 750;
+	maxRot = 30;
+	minRot = -maxRot;
 
 }
 
-Flapper::Flapper(Sprite _sprite) {
+Flapper::Flapper(Sprite _sprite):Flapper() {
 	sprite = _sprite;
 	rb.initialize(0.8f, -10, sprite.getPos(), sprite.getRot(), sprite.getScale(), sprite.getSize());
 
@@ -14,11 +18,27 @@ Flapper::Flapper(Sprite _sprite) {
 void Flapper::update() {
 	sprite.Update();
 	rb.update();
+
+	float yVel = rb.getVel().y;
+	if (flapForce == 0) {
+		cout << " Error! Flapping will do no good! Setting to 750" << endl;
+		flapForce = 750;
+	}
+	float newRot = yVel* (maxRot/ flapForce) ;
+	sprite.rotateTo(newRot);
 }
 void Flapper::render() {
 	sprite.Render();
 	rb.render(Vector3(0,0,0));
 }
+
+void Flapper::flap() {
+
+	rb.setVel(Vector3(0, flapForce, 0));
+	sprite.rotateTo(maxRot);
+	
+}
+
 
 Sprite& Flapper::getSprite() {
 	return sprite;
