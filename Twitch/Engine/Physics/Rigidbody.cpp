@@ -1,5 +1,9 @@
 #include "Rigidbody.h"
 #include "../Engine.h"
+#include "../Math/Math.h"
+
+#include <vector>
+using namespace std;
 
 
 Rigidbody::Rigidbody() {
@@ -14,16 +18,30 @@ void Rigidbody::initialize(float _friction, float _gravity, Vector3* _pos, float
 
 	pos = _pos;
 	rot = _rot;
+	lastRot = *rot;
 	scale = _scale;
 	size = _size;
 	boundingRect = _boundingRect;
+
 }
 
 void Rigidbody::update() {
 	vel.x *= friction;
-	vel.y += gravity;
+	//vel.y += gravity;
 
 	*pos = *pos + (vel * Engine::getDt());
+	//cout << lastRot << "::" << *rot << endl;
+	//cout << boundingRect.toString() << endl;
+
+	if (lastRot != *rot) {
+		boundingRect.lowerLeftVertex = Math::RotatePoint(boundingRect.lowerLeftVertex, Vector3(0), *rot - lastRot);
+		boundingRect.lowerRightVertex = Math::RotatePoint(boundingRect.lowerRightVertex, Vector3(0), *rot - lastRot);boundingRect.lowerLeftVertex = Math::RotatePoint(boundingRect.lowerLeftVertex, Vector3(0), *rot - lastRot);
+		boundingRect.upperLeftVertex = Math::RotatePoint(boundingRect.upperLeftVertex, Vector3(0), *rot - lastRot);
+		boundingRect.upperRightVertex = Math::RotatePoint(boundingRect.upperRightVertex, Vector3(0), *rot - lastRot);
+		lastRot = *rot;
+
+	}
+
 	//vel = Vector3(0);
 
 }
@@ -31,14 +49,28 @@ void Rigidbody::update() {
 void Rigidbody::render(Vector3 c) {
 	glLoadIdentity();
 	glTranslatef(pos->x, pos->y, pos->z);
-	glRotatef(*rot, 0, 0, 1);
+	//glRotatef(*rot, 0, 0, 1);
 	glScalef(scale->x, scale->y, scale->z);
 
 	glColor4f(c.x, c.y, c.z, 1);
-	//glLineWidth(2.5);
+	glLineWidth(2.5);
 	glBegin(GL_LINES);
 	{
-		glVertex2i(-(int)size->x, -(int)size->y);
+
+		glVertex2f(boundingRect.lowerLeftVertex.x, boundingRect.lowerLeftVertex.y);
+		glVertex2f(boundingRect.lowerRightVertex.x, boundingRect.lowerRightVertex.y);
+
+		glVertex2f(boundingRect.lowerRightVertex.x, boundingRect.lowerRightVertex.y);
+		glVertex2f(boundingRect.upperRightVertex.x, boundingRect.upperRightVertex.y);
+
+		glVertex2f(boundingRect.upperRightVertex.x, boundingRect.upperRightVertex.y);
+		glVertex2f(boundingRect.upperLeftVertex.x, boundingRect.upperLeftVertex.y);
+
+		glVertex2f(boundingRect.upperLeftVertex.x, boundingRect.upperLeftVertex.y);
+		glVertex2f(boundingRect.lowerLeftVertex.x, boundingRect.lowerLeftVertex.y);
+
+
+		/*glVertex2i(-(int)size->x, -(int)size->y);
 		glVertex2i((int)size->x, -(int)size->y);
 
 		glVertex2i((int)size->x, -(int)size->y);
@@ -49,7 +81,7 @@ void Rigidbody::render(Vector3 c) {
 
 		glVertex2i(-(int)size->x, (int)size->y);
 		glVertex2i(-(int)size->x, -(int)size->y);
-
+		*/
 
 	}	
 	glEnd();
@@ -69,4 +101,79 @@ Vector3 Rigidbody::getVel() {
 
 void Rigidbody::setVel(Vector3 _vel) {
 	vel = _vel;
+}
+
+bool Rigidbody::isColliding(const Rigidbody& rbA, const Rigidbody& rbB) {
+
+	Rect rcA = rbA.boundingRect;
+	Rect rcB = rbB.boundingRect;
+
+	float aMax = 0;
+	float aMin = 0;
+	float bMax = 0;
+	float bMin = 0;
+
+	Vector3 axis1 = rcA.upperRightVertex - rcA.upperLeftVertex;
+	Vector3 axis2 = rcA.upperRightVertex - rcA.upperLeftVertex;
+	Vector3 axis3 = rcB.upperLeftVertex - rcB.lowerLeftVertex;
+	Vector3 axis4 = rcB.upperLeftVertex - rcB.upperRightVertex;
+
+	vector<Vector3> axes;
+	axes.push_back(axis1);
+	axes.push_back(axis2);
+	axes.push_back(axis3);
+	axes.push_back(axis4);
+
+	for (int i = 0; i < axes.size(); i++) {
+		Vector3 aURProj = Vector3::Project(rcA.upperRightVertex, axes[i]);
+		Vector3 aULProj = Vector3::Project(rcA.upperLeftVertex, axes[i]);
+		Vector3 aLRProj = Vector3::Project(rcA.lowerRightVertex, axes[i]);
+		Vector3 aLLProj = Vector3::Project(rcA.lowerLeftVertex, axes[i]);
+
+		Vector3 bURProj = Vector3::Project(rcB.upperRightVertex, axes[i]);
+		Vector3 bULProj = Vector3::Project(rcB.upperLeftVertex, axes[i]);
+		Vector3 bLRProj = Vector3::Project(rcB.lowerRightVertex, axes[i]);
+		Vector3 bLLProj = Vector3::Project(rcB.lowerLeftVertex, axes[i]);
+
+		float aURScalar = Vector3::Dot(aURProj, axes[i]);
+		float aULScalar = Vector3::Dot(aULProj, axes[i]);
+		float aLRScalar = Vector3::Dot(aLRProj, axes[i]);
+		float aLLScalar = Vector3::Dot(aLLProj, axes[i]);
+
+		float bURScalar = Vector3::Dot(bURProj, axes[i]);
+		float bULScalar = Vector3::Dot(bULProj, axes[i]);
+		float bLRScalar = Vector3::Dot(bLRProj, axes[i]);
+		float bLLScalar = Vector3::Dot(bLLProj, axes[i]);
+
+		vector<float> aScalars;
+		aScalars.push_back(aURScalar);
+		aScalars.push_back(aULScalar);
+		aScalars.push_back(aLRScalar);
+		aScalars.push_back(aLLScalar);
+
+		aMin = Math::Min(aScalars);
+		aMax = Math::Max(aScalars);
+
+		vector<float> bScalars;
+		bScalars.push_back(bURScalar);
+		bScalars.push_back(bULScalar);
+		bScalars.push_back(bLRScalar);
+		bScalars.push_back(bLLScalar);
+
+		bMin = Math::Min(bScalars);
+		bMax = Math::Max(bScalars);
+
+		if (!(bMin <= aMax && bMax >= aMin)) {
+			return false;
+		}
+
+	}
+	return true;
+
+
+
+
+
+
+
 }

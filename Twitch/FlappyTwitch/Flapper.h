@@ -1,8 +1,9 @@
 #ifndef TWITCH_FLAPPER
 #define TWITCH_FLAPPER
 
-#include"../Engine/Graphics/Sprite.h"
-#include"../Engine/Physics/Rigidbody.h"
+#include "../Engine/Graphics/Sprite.h"
+#include "../Engine/Physics/Rigidbody.h"
+
 
 class Flapper {
 public:

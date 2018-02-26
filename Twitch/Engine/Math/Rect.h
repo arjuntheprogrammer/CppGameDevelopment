@@ -2,6 +2,10 @@
 #define TWITCH_RECT
 
 #include "Vector3.h"
+#include <string>
+using namespace std;
+
+
 
 class Rect {
 
@@ -15,6 +19,8 @@ public:
 	void MoveTo(Vector3 to);
 	void SetSize(Vector3 _size);
 	
+	string toString();
+
 	Vector3 upperLeftVertex;
 	Vector3 upperRightVertex;
 	Vector3 lowerLeftVertex;

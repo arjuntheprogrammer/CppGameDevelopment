@@ -6,7 +6,9 @@
 
 
 class Rigidbody {
+
 public:
+	static  bool isColliding(const Rigidbody& rbA, const Rigidbody& rbB);
 	Rigidbody();
 	void initialize(float _friction, float _gravity, Vector3* _pos, float* _rot, Vector3* _scale, Vector3* size, Rect _boundingRect);
 	void update();
@@ -23,7 +25,7 @@ private:
 	Vector3* scale;
 	Vector3* size;
 	float* rot;
-
+	float lastRot;
 	float gravity;
 	float friction;
 	Vector3 vel;

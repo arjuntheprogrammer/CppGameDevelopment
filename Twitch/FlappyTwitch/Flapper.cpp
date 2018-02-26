@@ -1,6 +1,6 @@
 #include "Flapper.h"
 #include "../Engine/Engine.h"
-
+#include "../Engine/Math/Rect.h"
 Flapper::Flapper() {
 	flapForce = 750;
 	maxRot = 30;
@@ -10,7 +10,9 @@ Flapper::Flapper() {
 
 Flapper::Flapper(Sprite _sprite):Flapper() {
 	sprite = _sprite;
-	rb.initialize(0.8f, -10, sprite.getPos(), sprite.getRot(), sprite.getScale(), sprite.getSize());
+	Rect boundingRect = Rect();
+	boundingRect.SetSize(*sprite.getSize());
+	rb.initialize(0.8f, -10, sprite.getPos(), sprite.getRot(), sprite.getScale(), sprite.getSize(), boundingRect);
 
 }
 
@@ -25,7 +27,7 @@ void Flapper::update() {
 		flapForce = 750;
 	}
 	float newRot = yVel* (maxRot/ flapForce) ;
-	sprite.rotateTo(newRot);
+	//sprite.rotateTo(newRot);
 }
 void Flapper::render() {
 	sprite.Render();
@@ -34,8 +36,9 @@ void Flapper::render() {
 
 void Flapper::flap() {
 
-	rb.setVel(Vector3(0, flapForce, 0));
-	sprite.rotateTo(maxRot);
+	//rb.setVel(Vector3(0, flapForce, 0));
+	//sprite.rotateTo(maxRot);
+	sprite.rotateBy(10);
 	
 }
 
