@@ -11,7 +11,7 @@ Flapper::Flapper() {
 Flapper::Flapper(Sprite _sprite):Flapper() {
 	sprite = _sprite;
 	Rect boundingRect = Rect();
-	boundingRect.SetSize(*sprite.getSize());
+	boundingRect.SetSize(*sprite.getSize() * *sprite.getScale());
 	rb.initialize(0.8f, -10, sprite.getPos(), sprite.getRot(), sprite.getScale(), sprite.getSize(), boundingRect);
 
 }

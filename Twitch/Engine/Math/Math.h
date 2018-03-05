@@ -17,6 +17,6 @@ namespace Math
 
 	float Min(vector<float> x);
 	float Max(vector<float> x);
+	float Abs(float x);
 }
-
 #endif

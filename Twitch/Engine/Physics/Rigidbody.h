@@ -1,5 +1,6 @@
 #ifndef TWITCH_RIGIDBODY
-#define TWITH_RIGIDBODY
+#define TWITCH_RIGIDBODY
+
 #include "../Math/Vector3.h"
 #include "../Math/Rect.h"
 

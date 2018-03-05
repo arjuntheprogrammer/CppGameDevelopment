@@ -36,6 +36,7 @@ namespace  Math
 				retVal = x[i];
 			}
 		}
+		return retVal;
 
 	}
 	float Max(vector<float> x) {
@@ -45,6 +46,13 @@ namespace  Math
 				retVal = x[i];
 			}
 		}
+		return retVal;
+	}
+	float Abs(float x) {
+		if (x > 0) {
+			return x;
+		}
+		return -x;
 	}
 
 
