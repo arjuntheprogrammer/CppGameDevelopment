@@ -15,10 +15,18 @@ public:
 	Pipe();
 	Pipe(Vector3 _pos);
 
+	void setGap(float _gap);
+
 	void update();
 	void render();
 	void moveTo(Vector3 to);
 	void moveBy(Vector3 by);
+	
+	float getX();
+
+
+	Rigidbody getTopRB();
+	Rigidbody getBotRB();
 
 
 

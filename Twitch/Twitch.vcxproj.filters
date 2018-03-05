@@ -51,6 +51,9 @@
     <ClInclude Include="FlappyTwitch\Pipe.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="FlappyTwitch\PipeManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Twitch.cpp">
@@ -90,6 +93,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="FlappyTwitch\Pipe.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FlappyTwitch\PipeManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -53,7 +53,7 @@ void Rigidbody::render(Vector3 c) {
 	//glScalef(scale->x, scale->y, scale->z);
 
 	glColor4f(c.x, c.y, c.z, 1);
-	glLineWidth(2.5);
+	glLineWidth(6.0);
 	glBegin(GL_LINES);
 	{
 
@@ -183,11 +183,4 @@ bool Rigidbody::isColliding(const Rigidbody& rbA, const Rigidbody& rbB) {
 
 	}
 	return true;
-
-
-
-
-
-
-
 }

@@ -22,10 +22,6 @@ public:
 	bool operator!=(const Vector3& other);
 
 
-
-
-
-
 	float x;
 	float y;
 	float z;

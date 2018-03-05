@@ -36,6 +36,11 @@ public:
 	void setScale(float x);
 	void setScale(Vector3 v);
 
+	void flipHorizontal();
+	void flipVertical();
+
+
+
 	Vector3* getPos();
 	float* getRot();
 	Vector3* getScale();

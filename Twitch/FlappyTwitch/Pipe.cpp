@@ -8,6 +8,9 @@ Sprite* Pipe::pipeSprite = NULL;
 
 void Pipe::Initialize() {
 	pipeSprite = new Sprite("Assets/Art/pipe.png");
+	pipeSprite->setScale(Vector3(0.1f, 0.35f, 1));
+	//pipeSprite->setScale(0.1f);
+
 }
 
 Pipe::Pipe() {
@@ -19,8 +22,8 @@ Pipe::Pipe() {
 	topSprite = Sprite(*pipeSprite);
 	botSprite = Sprite(*pipeSprite);
 
-	gap = 100;
-	speed = 10;
+	gap = 1000;
+	speed = 200;
 
 }
 
@@ -28,42 +31,47 @@ Pipe::Pipe(Vector3 _pos) :Pipe() {
 	if (!pipeSprite) {
 		return;
 	}
-
 	pos = _pos;
-	Vector3 topPos = pos;
-	topPos.y += (gap / 2);
-	topSprite.moveTo(topPos);
-	topSprite.setScale((*topSprite.getScale()) * Vector3(0, -1, 0));
+
+	updatePos();
+
+	//Vector3 topPos = pos;
+	//topPos.y += (gap / 2);
+	//topSprite.moveTo(topPos);
+	//topSprite.setScale((*topSprite.getScale()) * Vector3(1, -1, 1));
+	topSprite.flipVertical();
 
 	Rect topRC = Rect();
 	topRC.SetSize(Vector3(Math::Abs(topSprite.getSize()->x * topSprite.getScale()->x), Math::Abs(topSprite.getSize()->y * topSprite.getScale()->y), 1) );
-	topRC.MoveBy(Vector3(0, (topSprite.getSize()->y * topSprite.getScale()->y)/2, 0));
-
-
-
+	//topRC.MoveBy(Vector3(0, (topSprite.getSize()->y * topSprite.getScale()->y)/2, 0));
 	topRB = Rigidbody();
-	topRB.initialize(0, 0, topSprite.getPos(), topSprite.getRot(), topSprite.getScale(),topSprite.getSize(), topRC);
+	topRB.initialize(1, 0, topSprite.getPos(), topSprite.getRot(), topSprite.getScale(),topSprite.getSize(), topRC);
 
 	//////////////////////////////////////////////
 
-	Vector3 botPos = pos;
-	botPos.y -= (gap / 2);
-	botSprite.moveTo(botPos);
-
+	//Vector3 botPos = pos;
+	//botPos.y -= (gap / 2);
+	//botSprite.moveTo(botPos);
 	Rect botRC = Rect();
 	botRC.SetSize(Vector3(Math::Abs(botSprite.getSize()->x * botSprite.getScale()->x), Math::Abs(botSprite.getSize()->y * botSprite.getScale()->y), 1));
-	botRC.MoveBy(Vector3(0, (botSprite.getSize()->y * botSprite.getScale()->y), 0));
-
-
-
+	//botRC.MoveBy(Vector3(0, (botSprite.getSize()->y * botSprite.getScale()->y), 0));
 	botRB = Rigidbody();
-	botRB.initialize(0, 0, botSprite.getPos(), botSprite.getRot(), botSprite.getScale(), botSprite.getSize(), botRC);
+	botRB.initialize(1, 0, botSprite.getPos(), botSprite.getRot(), botSprite.getScale(), botSprite.getSize(), botRC);
+	topRB.addForce(Vector3(-speed, 0, 0));
+	botRB.addForce(Vector3(-speed, 0, 0));
 
 }
 
+
+void Pipe::setGap(float _gap) {
+	gap = _gap;
+}
+
 void Pipe::update() {
-	topSprite.moveBy(Vector3(-speed * Engine::getDt(), 0, 0));
-	botSprite.moveBy(Vector3(-speed * Engine::getDt(), 0, 0));
+	///topSprite.moveBy(Vector3(-speed * Engine::getDt(), 0, 0));
+	///botSprite.moveBy(Vector3(-speed * Engine::getDt(), 0, 0));
+
+	
 	topRB.update();
 	botRB.update();
 
@@ -74,7 +82,7 @@ void Pipe::render() {
 	botSprite.Render();
 
 	topRB.render(Vector3(255, 0 ,0));
-	botRB.render(Vector3(255, 0, 0));
+	botRB.render(Vector3(0, 255, 0));
 
 }
 
@@ -91,14 +99,31 @@ void Pipe::moveBy(Vector3 by) {
 
 }
 
+float Pipe::getX() {
+	return topSprite.getPos()->x;
+}
+
+
+Rigidbody Pipe::getTopRB() {
+	return topRB;
+
+}
+
+
+Rigidbody Pipe::getBotRB() {
+	return botRB;
+
+}
+
+
 
 void Pipe::updatePos(){
 	Vector3 topPos = pos;
-	topPos.y += (gap / 2);
+	topPos.y += (gap / 2) + Math::Abs(topSprite.getSize()->y * topSprite.getScale()->y /2);
 	topSprite.moveTo(topPos);
 
 
 	Vector3 botPos = pos;
-	botPos.y -= (gap / 2);
+	botPos.y -= (gap / 2) + Math::Abs(botSprite.getSize()->y * botSprite.getScale()->y / 2);
 	botSprite.moveTo(botPos);
 }

@@ -11,14 +11,16 @@
 class InputManager {
 
 public:
-	InputManager(Flapper* _flapper, Pipe* _pipe);
+	InputManager(Flapper* _flapper
+		//, Pipe* _pipe
+	);
 	void update();
 	 
 
 
 private:
 	Flapper * flapper;
-	Pipe* pipe;
+	//Pipe* pipe;
 
 
 };

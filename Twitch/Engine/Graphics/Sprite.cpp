@@ -124,6 +124,13 @@ void Sprite::setScale(Vector3 v) {
 	scale = v;
 }
 
+void Sprite::flipHorizontal() {
+	scale.x = -scale.x;
+}
+
+void Sprite::flipVertical() {
+	scale.y = -scale.y;
+}
 
 
 Vector3* Sprite::getPos() {

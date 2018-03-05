@@ -11,7 +11,8 @@ Flapper::Flapper() {
 Flapper::Flapper(Sprite _sprite):Flapper() {
 	sprite = _sprite;
 	Rect boundingRect = Rect();
-	boundingRect.SetSize(*sprite.getSize() * *sprite.getScale());
+	Vector3 sizeOffset(0.8, 0.6, 1);
+	boundingRect.SetSize(*sprite.getSize() * *sprite.getScale() * sizeOffset);
 	rb.initialize(0.8f, -10, sprite.getPos(), sprite.getRot(), sprite.getScale(), sprite.getSize(), boundingRect);
 
 }
@@ -31,7 +32,7 @@ void Flapper::update() {
 }
 void Flapper::render() {
 	sprite.Render();
-	rb.render(Vector3(0,0,0));
+	rb.render(Vector3(255, 0, 0));
 }
 
 void Flapper::flap() {

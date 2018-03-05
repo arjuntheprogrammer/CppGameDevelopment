@@ -1,8 +1,10 @@
 #include "InputManager.h"
 
-InputManager::InputManager(Flapper* _flapper, Pipe *_pipe) {
+InputManager::InputManager(Flapper* _flapper
+						//	,Pipe *_pipe
+						) {
 	flapper = _flapper;
-	pipe = _pipe;
+	//pipe = _pipe;
 }
 
 void InputManager::update() {
@@ -19,11 +21,11 @@ void InputManager::update() {
 	}
 	*/
 
-	if (Keyboard::key(GLFW_KEY_SPACE) || Mouse::buttonDown(GLFW_MOUSE_BUTTON_LEFT)) {
+	if (Keyboard::keyDown(GLFW_KEY_SPACE) || Mouse::buttonDown(GLFW_MOUSE_BUTTON_LEFT)) {
 		flapper->flap();
 	}
 
-	pipe->moveTo(Vector3(Mouse::getMouseX(), Mouse::getMouseY(), 0));
+	///pipe->moveTo(Vector3(Mouse::getMouseX(), Mouse::getMouseY(), 0));
 	//flapper->getSprite().moveTo(Vector3(Mouse::getMouseX(), Mouse::getMouseY(), 0));
 
 
