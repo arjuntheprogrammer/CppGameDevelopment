@@ -18,6 +18,8 @@ public:
 	Sprite& getSprite();
 	Rigidbody& getRB();
 
+private:
+	void handleInput(); 
 
 private:
 	Sprite sprite;

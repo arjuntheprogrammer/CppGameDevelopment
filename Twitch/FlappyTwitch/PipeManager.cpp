@@ -18,7 +18,7 @@ PipeManager::PipeManager():
 {
 	//pipes.push_back(new Pipe(Vector3(1500, Engine::SCREEN_HEIGHT / 2, 0)));
 	//pipes.push_back(new Pipe(Vector3(3000, Engine::SCREEN_HEIGHT / 2, 0)));
-
+	Pipe::Initialize();
 	createPipe();
 	
 }

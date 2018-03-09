@@ -1,6 +1,10 @@
 #include "Flapper.h"
 #include "../Engine/Engine.h"
 #include "../Engine/Math/Rect.h"
+#include "../Engine/IO/Keyboard.h"
+#include "../Engine/IO/Mouse.h"
+
+
 Flapper::Flapper() {
 	flapForce = 750;
 	maxRot = 30;
@@ -19,6 +23,7 @@ Flapper::Flapper(Sprite _sprite):Flapper() {
 
 
 void Flapper::update() {
+	handleInput();
 	sprite.Update();
 	rb.update();
 
@@ -50,4 +55,10 @@ Sprite& Flapper::getSprite() {
 
 Rigidbody& Flapper::getRB() {
 	return rb;
+}
+
+void Flapper::handleInput() {
+	if (Keyboard::key(GLFW_KEY_SPACE) || Mouse::buttonDown(GLFW_MOUSE_BUTTON_LEFT)) {
+		flap();
+	}
 }
