@@ -28,7 +28,7 @@ void Flapper::update() {
 		flapForce = 750;
 	}
 	float newRot = yVel* (maxRot/ flapForce) ;
-	//sprite.rotateTo(newRot);
+	sprite.rotateTo(newRot);
 }
 void Flapper::render() {
 	sprite.Render();
@@ -37,9 +37,9 @@ void Flapper::render() {
 
 void Flapper::flap() {
 
-	//rb.setVel(Vector3(0, flapForce, 0));
-	//sprite.rotateTo(maxRot);
-	sprite.rotateBy(10);
+	rb.setVel(Vector3(0, flapForce, 0));
+	sprite.rotateTo(maxRot);
+	//sprite.rotateBy(10);
 	
 }
 

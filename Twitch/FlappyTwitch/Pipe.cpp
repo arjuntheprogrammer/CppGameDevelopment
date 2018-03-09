@@ -31,7 +31,7 @@ Pipe::Pipe(Vector3 _pos) :Pipe() {
 	if (!pipeSprite) {
 		return;
 	}
-	pos = _pos;
+	pos = _pos + Vector3(getWidth(), 0, 0);
 
 	updatePos();
 
@@ -65,6 +65,7 @@ Pipe::Pipe(Vector3 _pos) :Pipe() {
 
 void Pipe::setGap(float _gap) {
 	gap = _gap;
+	updatePos();
 }
 
 void Pipe::update() {
@@ -103,6 +104,9 @@ float Pipe::getX() {
 	return topSprite.getPos()->x;
 }
 
+float Pipe::getWidth() {
+	return topSprite.getSize()->x * topSprite.getScale()->x;
+}
 
 Rigidbody Pipe::getTopRB() {
 	return topRB;

@@ -23,6 +23,7 @@ public:
 	void moveBy(Vector3 by);
 	
 	float getX();
+	float getWidth();
 
 
 	Rigidbody getTopRB();

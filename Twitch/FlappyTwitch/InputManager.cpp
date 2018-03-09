@@ -21,7 +21,7 @@ void InputManager::update() {
 	}
 	*/
 
-	if (Keyboard::keyDown(GLFW_KEY_SPACE) || Mouse::buttonDown(GLFW_MOUSE_BUTTON_LEFT)) {
+	if (Keyboard::key(GLFW_KEY_SPACE) || Mouse::buttonDown(GLFW_MOUSE_BUTTON_LEFT)) {
 		flapper->flap();
 	}
 

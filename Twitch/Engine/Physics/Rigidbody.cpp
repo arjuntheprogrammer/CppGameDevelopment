@@ -27,7 +27,7 @@ void Rigidbody::initialize(float _friction, float _gravity, Vector3* _pos, float
 
 void Rigidbody::update() {
 	vel.x *= friction;
-	//vel.y += gravity;
+	vel.y += gravity;
 
 	*pos = *pos + (vel * Engine::getDt());
 	//cout << lastRot << "::" << *rot << endl;

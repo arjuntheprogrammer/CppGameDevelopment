@@ -1,6 +1,7 @@
 #ifndef TWITCH_PIPEMANAGER
 #define TWITCH_PIPEMANAGER
 #include "Pipe.h"
+#include "Flapper.h"
 #include<vector>
 using namespace std;
 
@@ -12,11 +13,27 @@ public:
 	void update();
 	void render();
 
-private:
-	vector<Pipe*> pipes;
-	float xSeparation;
-	float ySeparation;
+	bool checkCollision(Flapper& flapper);
 
+private:
+	void createPipe();
+	vector<Pipe*> pipes;
+
+	float xSeparation;
+	float minXSeparation;
+	
+	float ySeparation;
+	float minYSeparation;
+
+	float xSeparationSpeed;
+	float ySeparationSpeed;
+
+
+	
+	int minSpawnY;
+	int maxSpawnY;
+	
+	int totalPipes;
 
 };
 
