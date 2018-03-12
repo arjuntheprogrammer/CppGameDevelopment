@@ -11,7 +11,7 @@ public:
 	Vector3(const Vector3& other);
 	Vector3(float _x);
 	Vector3(float _x, float _y, float _z);
-	
+
 	Vector3& operator=(const Vector3& other);
 	Vector3 operator+(const Vector3& other);
 	Vector3 operator-(const Vector3& other);
@@ -21,13 +21,9 @@ public:
 	bool operator==(const Vector3& other);
 	bool operator!=(const Vector3& other);
 
-
 	float x;
 	float y;
 	float z;
-
 };
-
-
 
 #endif

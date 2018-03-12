@@ -1,7 +1,7 @@
 #ifndef TWITCH_ENGINE
 #define TWITCH_ENGINE
 
-#include"GLFW/glfw3.h"
+#include "GLFW/glfw3.h"
 #pragma comment(lib, "opengl32.lib")
 
 #include <iostream>
@@ -23,8 +23,6 @@ public:
 	void Update();
 	void BeginRender();
 	void EndRender();
-
-
 
 private:
 	static GLFWwindow* window;

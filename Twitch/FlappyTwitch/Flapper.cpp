@@ -1,4 +1,5 @@
 #include "Flapper.h"
+
 #include "../Engine/Engine.h"
 #include "../Engine/Math/Rect.h"
 #include "../Engine/IO/Keyboard.h"
@@ -9,7 +10,6 @@ Flapper::Flapper() {
 	flapForce = 750;
 	maxRot = 30;
 	minRot = -maxRot;
-
 }
 
 Flapper::Flapper(Sprite _sprite):Flapper() {
@@ -24,27 +24,27 @@ Flapper::Flapper(Sprite _sprite):Flapper() {
 
 void Flapper::update() {
 	handleInput();
+
 	sprite.Update();
 	rb.update();
 
 	float yVel = rb.getVel().y;
 	if (flapForce == 0) {
-		cout << " Error! Flapping will do no good! Setting to 750" << endl;
+		cout << " Error! Flapping will do you no good! Setting to 750" << endl;
 		flapForce = 750;
 	}
-	float newRot = yVel* (maxRot/ flapForce) ;
+	float newRot = (maxRot / flapForce) * yVel ;
 	sprite.rotateTo(newRot);
 }
 void Flapper::render() {
 	sprite.Render();
-	rb.render(Vector3(255, 0, 0));
+	rb.render(Vector3(0, 0, 0));
 }
 
 void Flapper::flap() {
 
 	rb.setVel(Vector3(0, flapForce, 0));
 	sprite.rotateTo(maxRot);
-	//sprite.rotateBy(10);
 	
 }
 
@@ -66,7 +66,7 @@ void Flapper::reset() {
 }
 
 void Flapper::handleInput() {
-	if (Keyboard::key(GLFW_KEY_SPACE) || Mouse::buttonDown(GLFW_MOUSE_BUTTON_LEFT)) {
+	if (Keyboard::keyDown(GLFW_KEY_SPACE) || Mouse::buttonDown(GLFW_MOUSE_BUTTON_LEFT)) {
 		flap();
 	}
 }

@@ -8,7 +8,7 @@ class Mouse {
 public:
 	static void mousePosCallback(GLFWwindow* window, double _x, double _y);
 	static void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
-	
+
 	static double getMouseX();
 	static double getMouseY();
 
@@ -17,16 +17,13 @@ public:
 	static bool button(int button);
 
 
-
-	
 private:
 	static double x;
 	static double y;
+
 	static bool buttons[];
 	static bool buttonsDown[];
 	static bool buttonsUp[];
-
-
 };
 
 #endif // ! TWITCH_MOUSE

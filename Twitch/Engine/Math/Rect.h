@@ -3,12 +3,10 @@
 
 #include "Vector3.h"
 #include <string>
+
 using namespace std;
 
-
-
 class Rect {
-
 
 public:
 	Rect();
@@ -18,7 +16,7 @@ public:
 	void MoveBy(Vector3 by);
 	void MoveTo(Vector3 to);
 	void SetSize(Vector3 _size);
-	
+
 	string toString();
 
 	Vector3 upperLeftVertex;
@@ -26,15 +24,11 @@ public:
 	Vector3 lowerLeftVertex;
 	Vector3 lowerRightVertex;
 
-
 private:
 	void UpdateVertices();
-	Vector3 pos;
+	
+  Vector3 pos;
 	Vector3 size;
 
-	
-
-
 };
-
 #endif // !TWITCH_RECT

@@ -1,7 +1,6 @@
 #ifndef TWITCH_TEXTURE
 #define TWITCH_TEXTURE
 
-
 #include "GLFW/glfw3.h"
 #include "SOIL/include/SOIL.h"
 
@@ -24,13 +23,10 @@ public:
 
 private:
 	bool GetTextureParams();
+
 	int id;
 	int width;
 	int height;
-
-
-
 };
-
 
 #endif

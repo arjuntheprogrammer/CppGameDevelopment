@@ -16,6 +16,7 @@ public:
 	Sprite();
 	Sprite(string imagePath);
 	Sprite(string imagePath, Vector3 _pos);
+
 	void Update();
 	void Render();
 
@@ -51,14 +52,12 @@ public:
 
 private:
 	Texture texture;
-
+  float speed;
+	
 	Vector3 pos;
+  float rot;
 	Vector3 scale;
-	float speed;
-	float rot;
 	Vector3 size;
 };
-
-
 
 #endif

@@ -11,14 +11,15 @@ public:
 	static Sprite* pipeSprite;
 	static void Initialize();
 
-
 	Pipe();
 	Pipe(Vector3 _pos);
 
 	void setGap(float _gap);
 	float getPrevPos();
+
 	void update();
 	void render();
+
 	void moveTo(Vector3 to);
 	void moveBy(Vector3 by);
 	
@@ -40,7 +41,6 @@ private:
 	Rigidbody botRB;
 	
 	Vector3 pos;
-
 	float prevPos;
 
 	float gap;

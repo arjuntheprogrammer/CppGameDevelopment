@@ -7,6 +7,7 @@
 
 class Flapper {
 public:
+
 	Flapper();
 	Flapper(Sprite _sprite);
 
@@ -26,6 +27,7 @@ private:
 private:
 	Sprite sprite;
 	Rigidbody rb;
+
 	float flapForce;
 	float maxRot;
 	float minRot;

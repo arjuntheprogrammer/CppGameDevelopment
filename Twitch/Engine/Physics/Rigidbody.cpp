@@ -1,5 +1,6 @@
 #include "Rigidbody.h"
 #include "../Engine.h"
+
 #include "../Math/Math.h"
 
 #include <vector>
@@ -9,7 +10,6 @@ using namespace std;
 Rigidbody::Rigidbody() {
 	friction = 1;
 	gravity = 0;
-
 }
 
 void Rigidbody::initialize(float _friction, float _gravity, Vector3* _pos, float* _rot, Vector3* _scale, Vector3* _size, Rect _boundingRect) {
@@ -21,8 +21,8 @@ void Rigidbody::initialize(float _friction, float _gravity, Vector3* _pos, float
 	lastRot = *rot;
 	scale = _scale;
 	size = _size;
-	boundingRect = _boundingRect;
 
+	boundingRect = _boundingRect;
 }
 
 void Rigidbody::update() {
@@ -30,33 +30,25 @@ void Rigidbody::update() {
 	vel.y += gravity;
 
 	*pos = *pos + (vel * Engine::getDt());
-	//cout << lastRot << "::" << *rot << endl;
-	//cout << boundingRect.toString() << endl;
 
 	if (lastRot != *rot) {
-		boundingRect.lowerLeftVertex 	= Math::RotatePoint(boundingRect.lowerLeftVertex, Vector3(0), *rot - lastRot);
+		boundingRect.lowerLeftVertex  = Math::RotatePoint(boundingRect.lowerLeftVertex, Vector3(0), *rot - lastRot);
 		boundingRect.lowerRightVertex	= Math::RotatePoint(boundingRect.lowerRightVertex, Vector3(0), *rot - lastRot);
-		boundingRect.upperLeftVertex 	= Math::RotatePoint(boundingRect.upperLeftVertex, Vector3(0), *rot - lastRot);
-		boundingRect.upperRightVertex 	= Math::RotatePoint(boundingRect.upperRightVertex, Vector3(0), *rot - lastRot);
+		boundingRect.upperLeftVertex  = Math::RotatePoint(boundingRect.upperLeftVertex, Vector3(0), *rot - lastRot);
+		boundingRect.upperRightVertex	= Math::RotatePoint(boundingRect.upperRightVertex, Vector3(0), *rot - lastRot);
 		lastRot = *rot;
-
 	}
-
-	//vel = Vector3(0);
-
 }
 
 void Rigidbody::render(Vector3 c) {
 	glLoadIdentity();
-	glTranslatef(pos->x, pos->y, pos->z);
-	//glRotatef(*rot, 0, 0, 1);
-	//glScalef(scale->x, scale->y, scale->z);
 
+	glTranslatef(pos->x, pos->y, pos->z);
+	
 	glColor4f(c.x, c.y, c.z, 1);
-	glLineWidth(6.0);
+	glLineWidth(2.5);
 	glBegin(GL_LINES);
 	{
-
 		glVertex2f(boundingRect.lowerLeftVertex.x, boundingRect.lowerLeftVertex.y);
 		glVertex2f(boundingRect.lowerRightVertex.x, boundingRect.lowerRightVertex.y);
 
@@ -68,25 +60,9 @@ void Rigidbody::render(Vector3 c) {
 
 		glVertex2f(boundingRect.upperLeftVertex.x, boundingRect.upperLeftVertex.y);
 		glVertex2f(boundingRect.lowerLeftVertex.x, boundingRect.lowerLeftVertex.y);
-
-
-		/*glVertex2i(-(int)size->x, -(int)size->y);
-		glVertex2i((int)size->x, -(int)size->y);
-
-		glVertex2i((int)size->x, -(int)size->y);
-		glVertex2i((int)size->x, (int)size->y);
-
-		glVertex2i((int)size->x, (int)size->y);
-		glVertex2i(-(int)size->x, (int)size->y);
-
-		glVertex2i(-(int)size->x, (int)size->y);
-		glVertex2i(-(int)size->x, -(int)size->y);
-		*/
-
-	}	
+	}
 	glEnd();
 
-	  
 }
 
 void Rigidbody::addForce(Vector3 force) {
@@ -108,16 +84,14 @@ bool Rigidbody::isColliding(const Rigidbody& rbA, const Rigidbody& rbB) {
 	Rect rcA = rbA.boundingRect;
 	Rect rcB = rbB.boundingRect;
 
-	Vector3 aUR = rcA.upperRightVertex + *rbA.pos;
-	Vector3 aUL = rcA.upperLeftVertex + *rbA.pos;
+	Vector3 aUR = rcA.upperRightVertex  + *rbA.pos;
+	Vector3 aUL = rcA.upperLeftVertex	+ *rbA.pos;
 	Vector3 aLR = rcA.lowerRightVertex + *rbA.pos;
 	Vector3 aLL = rcA.lowerLeftVertex + *rbA.pos;
-
-	Vector3 bUR = rcA.upperRightVertex + *rbB.pos;
-	Vector3 bUL = rcA.upperLeftVertex + *rbB.pos;
-	Vector3 bLR = rcA.lowerRightVertex + *rbB.pos;
-	Vector3 bLL = rcA.lowerLeftVertex + *rbB.pos;
-
+	Vector3 bUR = rcB.upperRightVertex + *rbB.pos;
+	Vector3 bUL = rcB.upperLeftVertex + *rbB.pos;
+	Vector3 bLR = rcB.lowerRightVertex + *rbB.pos;
+	Vector3 bLL = rcB.lowerLeftVertex + *rbB.pos;
 
 	float aMax = 0;
 	float aMin = 0;
@@ -135,12 +109,12 @@ bool Rigidbody::isColliding(const Rigidbody& rbA, const Rigidbody& rbB) {
 	axes.push_back(axis3);
 	axes.push_back(axis4);
 
-	for (int i = 0; i < axes.size(); i++) {
+	for (unsigned int i = 0; i < axes.size(); i++)
+  {
 		Vector3 aURProj = Vector3::Project(aUR, axes[i]);
 		Vector3 aULProj = Vector3::Project(aUL, axes[i]);
 		Vector3 aLRProj = Vector3::Project(aLR, axes[i]);
 		Vector3 aLLProj = Vector3::Project(aLL, axes[i]);
-
 		Vector3 bURProj = Vector3::Project(bUR, axes[i]);
 		Vector3 bULProj = Vector3::Project(bUL, axes[i]);
 		Vector3 bLRProj = Vector3::Project(bLR, axes[i]);
@@ -150,7 +124,6 @@ bool Rigidbody::isColliding(const Rigidbody& rbA, const Rigidbody& rbB) {
 		float aULScalar = Vector3::Dot(aULProj, axes[i]);
 		float aLRScalar = Vector3::Dot(aLRProj, axes[i]);
 		float aLLScalar = Vector3::Dot(aLLProj, axes[i]);
-
 		float bURScalar = Vector3::Dot(bURProj, axes[i]);
 		float bULScalar = Vector3::Dot(bULProj, axes[i]);
 		float bLRScalar = Vector3::Dot(bLRProj, axes[i]);
@@ -161,7 +134,6 @@ bool Rigidbody::isColliding(const Rigidbody& rbA, const Rigidbody& rbB) {
 		aScalars.push_back(aULScalar);
 		aScalars.push_back(aLRScalar);
 		aScalars.push_back(aLLScalar);
-
 		aMin = Math::Min(aScalars);
 		aMax = Math::Max(aScalars);
 
@@ -170,17 +142,17 @@ bool Rigidbody::isColliding(const Rigidbody& rbA, const Rigidbody& rbB) {
 		bScalars.push_back(bULScalar);
 		bScalars.push_back(bLRScalar);
 		bScalars.push_back(bLLScalar);
-
 		bMin = Math::Min(bScalars);
 		bMax = Math::Max(bScalars);
 
-		if (bMin <= aMax && bMax >= aMin) {
-			
+		if (bMin <= aMax && bMax >= aMin)
+	{
+
 		}
-		else {
+		else
+	{
 			return false;
 		}
-
 	}
 	return true;
 }

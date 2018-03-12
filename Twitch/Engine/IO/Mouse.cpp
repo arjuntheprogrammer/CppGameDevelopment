@@ -1,6 +1,5 @@
 #include "Mouse.h"
 
-
 double Mouse::x = 0;
 double Mouse::y = 0;
 
@@ -9,13 +8,12 @@ bool Mouse::buttonsDown[GLFW_MOUSE_BUTTON_LAST] = { 0 };
 bool Mouse::buttonsUp[GLFW_MOUSE_BUTTON_LAST] = { 0 };
 
 void Mouse::mousePosCallback(GLFWwindow* window, double _x, double _y) {
-	
+
 	int width, height;
 	glfwGetFramebufferSize(window, &width, &height);
 
 	x = _x;
 	y = height - _y;
-
 }
 
 void Mouse::mouseButtonCallback(GLFWwindow* window, int button, int action, int mode) {
@@ -46,7 +44,6 @@ bool Mouse::buttonDown(int button) {
 	bool x = buttonsDown[button];
 	buttonsDown[button] = false;
 	return x;
-
 }
 
 bool Mouse::buttonUp(int button) {
@@ -58,4 +55,3 @@ bool Mouse::buttonUp(int button) {
 bool Mouse::button(int button) {
 	return buttons[button];
 }
-
