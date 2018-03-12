@@ -32,7 +32,7 @@ Pipe::Pipe(Vector3 _pos) :Pipe() {
 		return;
 	}
 	pos = _pos + Vector3(getWidth(), 0, 0);
-
+	prevPos = pos.x;
 	updatePos();
 
 	//Vector3 topPos = pos;
@@ -68,11 +68,17 @@ void Pipe::setGap(float _gap) {
 	updatePos();
 }
 
+
+float Pipe::getPrevPos() {
+	return prevPos;
+}
+
+
 void Pipe::update() {
 	///topSprite.moveBy(Vector3(-speed * Engine::getDt(), 0, 0));
 	///botSprite.moveBy(Vector3(-speed * Engine::getDt(), 0, 0));
 
-	
+	prevPos = topSprite.getPos()->x;
 	topRB.update();
 	botRB.update();
 

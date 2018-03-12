@@ -15,7 +15,7 @@ Flapper::Flapper() {
 Flapper::Flapper(Sprite _sprite):Flapper() {
 	sprite = _sprite;
 	Rect boundingRect = Rect();
-	Vector3 sizeOffset(0.8, 0.6, 1);
+	Vector3 sizeOffset(0.8, 0.3, 1);
 	boundingRect.SetSize(*sprite.getSize() * *sprite.getScale() * sizeOffset);
 	rb.initialize(0.8f, -10, sprite.getPos(), sprite.getRot(), sprite.getScale(), sprite.getSize(), boundingRect);
 
@@ -55,6 +55,14 @@ Sprite& Flapper::getSprite() {
 
 Rigidbody& Flapper::getRB() {
 	return rb;
+}
+
+void Flapper::reset() {
+	sprite.moveTo(Vector3(Engine::SCREEN_WIDTH / 2, Engine::SCREEN_HEIGHT / 2, 0));
+	sprite.rotateTo(0);
+	rb.setVel(Vector3(0, 0, 0));
+
+
 }
 
 void Flapper::handleInput() {

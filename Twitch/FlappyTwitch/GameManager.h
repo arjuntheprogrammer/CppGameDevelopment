@@ -3,8 +3,6 @@
 
 #include "../Engine/Engine.h"
 #include "../Engine/Graphics/Sprite.h"
-#include "../Engine/IO/Mouse.h"
-#include "../Engine/IO/Keyboard.h"
 #include "Flapper.h"
 #include "PipeManager.h"
 
@@ -23,6 +21,10 @@ public:
 	GameManager();
 	~GameManager();
 	void start();
+
+private:
+	void setState(State state);
+
 private:
 	Engine* mEngine;
 	Flapper* mFlapper;

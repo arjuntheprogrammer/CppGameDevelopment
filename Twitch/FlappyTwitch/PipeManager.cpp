@@ -4,8 +4,10 @@
 
 
 PipeManager::PipeManager(): 
-	xSeparation(800),
-	ySeparation(1000),
+	xStartSeparation(800),
+	yStartSeparation(1000),
+	xSeparation(xStartSeparation),
+	ySeparation(yStartSeparation),
 	minXSeparation(200),
 	minYSeparation(300),
 	xSeparationSpeed(10),
@@ -13,8 +15,8 @@ PipeManager::PipeManager():
 
 	minSpawnY(100),
 	maxSpawnY(Engine::SCREEN_HEIGHT - 100),
-	totalPipes(0)
-
+	totalPipes(0),
+	points(0)
 {
 	//pipes.push_back(new Pipe(Vector3(1500, Engine::SCREEN_HEIGHT / 2, 0)));
 	//pipes.push_back(new Pipe(Vector3(3000, Engine::SCREEN_HEIGHT / 2, 0)));
@@ -45,6 +47,11 @@ void PipeManager::update() {
 				createPipe();
 			}
 		}
+		if (pipes[i]->getX() < Engine::SCREEN_WIDTH/2 && 
+			pipes[i]->getPrevPos() > Engine::SCREEN_WIDTH/2)
+		{
+			points++;
+		}
 
 	}
 
@@ -52,6 +59,8 @@ void PipeManager::update() {
 		delete pipes[pipesToDetele[i]];
 		pipes.erase(pipes.begin() + pipesToDetele[i]);
 	}
+
+	cout << "Points: " << points << endl;
 
 }
 
@@ -73,6 +82,20 @@ bool PipeManager::checkCollision(Flapper& flapper) {
 	return isColliding;
 }
 
+void PipeManager::reset() {
+	
+	for (unsigned int i = 0; i < pipes.size(); i++) {
+		delete pipes[i];
+	}
+	pipes.clear();
+
+	xSeparation = xStartSeparation;
+	ySeparation = yStartSeparation;
+	totalPipes = 0;
+	points = 0;
+	createPipe();
+
+}
 
 //Private
 
