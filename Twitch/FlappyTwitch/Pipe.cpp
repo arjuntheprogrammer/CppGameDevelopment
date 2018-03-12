@@ -22,7 +22,7 @@ Pipe::Pipe() {
 	botSprite = Sprite(*pipeSprite);
 
 	///gap = 1000;
-  gap = 350;
+	gap = 350;
 	speed = 200;
 }
 

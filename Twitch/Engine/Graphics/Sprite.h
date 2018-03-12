@@ -52,10 +52,10 @@ public:
 
 private:
 	Texture texture;
-  float speed;
+	float speed;
 	
 	Vector3 pos;
-  float rot;
+	float rot;
 	Vector3 scale;
 	Vector3 size;
 };

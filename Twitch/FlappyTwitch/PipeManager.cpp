@@ -7,7 +7,7 @@
 PipeManager::PipeManager(): 
 	xStartSeparation(800),
 	//yStartSeparation(1000),
-	yStartSeparation(500),
+	yStartSeparation(300),
 	xSeparation(xStartSeparation),
 	ySeparation(yStartSeparation),
 	minXSeparation(200),

@@ -83,5 +83,8 @@ void Engine::EndRender(){
 }
 
 float Engine::getDt() {
-	return dt;
+	cout << " dt: "<< dt << endl;
+	cout << " dt: " << dt << endl;
+
+	return (dt);
 }
